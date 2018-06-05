@@ -13,6 +13,7 @@ export default class Label extends PureComponent {
   };
 
   static propTypes = {
+    outline: PropTypes.bool,
     active: PropTypes.bool,
     focused: PropTypes.bool,
     errored: PropTypes.bool,
@@ -115,9 +116,15 @@ export default class Label extends PureComponent {
         inputRange: [0, 1],
         outputRange: [fontSize, activeFontSize],
       }),
-
+      marginLeft: 12,
       color,
+      backgroundColor: this.props.outline ? '#fff' : 'transparent',
+      paddingHorizontal: 4,
+      paddingVertical: 4,
+      borderRadius: 4,
     };
+
+
 
     let containerStyle = {
       position: 'absolute',

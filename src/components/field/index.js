@@ -27,15 +27,16 @@ export default class TextField extends PureComponent {
     disableFullscreenUI: true,
     autoCapitalize: 'sentences',
     editable: true,
+    outline: false,
 
     animationDuration: 225,
 
     fontSize: 16,
     titleFontSize: 12,
     labelFontSize: 12,
-    labelHeight: 32,
-    labelPadding: 4,
-    inputContainerPadding: 8,
+    labelHeight: 24,
+    labelPadding: 12,
+    inputContainerPadding: 12,
 
     tintColor: 'rgb(0, 145, 234)',
     textColor: 'rgba(0, 0, 0, .87)',
@@ -381,6 +382,13 @@ export default class TextField extends PureComponent {
         outputRange: [errorColor, baseColor, tintColor],
       });
 
+    let borderColor = restricted?
+      errorColor:
+      focus.interpolate({
+        inputRange: [-1, 0, 1],
+        outputRange: [errorColor, baseColor, tintColor],
+      });
+
     let borderBottomWidth = restricted?
       activeLineWidth:
       focus.interpolate({
@@ -388,9 +396,28 @@ export default class TextField extends PureComponent {
         outputRange: [activeLineWidth, lineWidth, activeLineWidth],
       });
 
+    let borderWidth = restricted?
+      activeLineWidth:
+      focus.interpolate({
+        inputRange: [-1, 0, 1],
+        outputRange: [activeLineWidth, lineWidth, activeLineWidth],
+      });
+
+    let border = {
+      borderTopLeftRadius: 5,
+      borderTopRightRadius: 5,
+      borderBottomLeftRadius: this.props.outline ? 5 : 0,
+      borderBottomRightRadius: this.props.outline ? 5 : 0,
+    };
+
+    inputContainerPadding = this.props.outline ? 24 : 12;
+    labelHeight = this.props.outline ? 12 : 24;
+
     let inputContainerStyle = {
       paddingTop: labelHeight,
       paddingBottom: inputContainerPadding,
+      backgroundColor: this.props.outline ? 'transparent' : '#ebebeb',
+      ...border,
 
       ...(disabled?
         { overflow: 'hidden' }:
@@ -401,9 +428,15 @@ export default class TextField extends PureComponent {
         { height: labelHeight + inputContainerPadding + fontSize * 1.5 }),
     };
 
+    if (this.props.outline) {
+      inputContainerStyle.borderColor = borderColor;
+      inputContainerStyle.borderWidth = borderWidth;
+    }
+
     let inputStyle = {
       fontSize,
       textAlign,
+      paddingLeft: 16,
 
       color: (disabled || defaultVisible)?
         baseColor:
@@ -494,6 +527,7 @@ export default class TextField extends PureComponent {
       focused,
       errored,
       restricted,
+      outline: this.props.outline,
       style: labelTextStyle,
     };
 
@@ -510,7 +544,6 @@ export default class TextField extends PureComponent {
       <View {...containerProps}>
         <Animated.View {...inputContainerProps}>
           {disabled && <Line {...lineProps} />}
-
           <Label {...labelProps}>{label}</Label>
 
           <View style={styles.row}>
@@ -531,7 +564,6 @@ export default class TextField extends PureComponent {
               value={value}
               ref={this.updateRef}
             />
-
             {this.renderAffix('suffix', active, focused)}
             {this.renderAccessory()}
           </View>
