@@ -416,7 +416,7 @@ export default class TextField extends PureComponent {
     let inputContainerStyle = {
       paddingTop: labelHeight,
       paddingBottom: inputContainerPadding,
-      backgroundColor: this.props.outline ? 'transparent' : '#ebebeb',
+      backgroundColor: this.props.outline ? 'transparent' : this.props.containerBackgroundColor || '#ebebeb',
       ...border,
 
       ...(disabled?
