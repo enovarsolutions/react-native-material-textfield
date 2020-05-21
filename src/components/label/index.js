@@ -90,7 +90,7 @@ export default class Label extends PureComponent {
       basePadding,
       style,
       errored,
-      active, 
+      active,
       focused,
       animationDuration,
       ...props
@@ -111,12 +111,18 @@ export default class Label extends PureComponent {
       ],
     });
 
+    const inactiveMargin = 12;
+    const activeMargin = this.props.prefix ? 36 : 12;
+
     let textStyle = {
       fontSize: input.interpolate({
         inputRange: [0, 1],
         outputRange: [fontSize, activeFontSize],
       }),
-      marginLeft: 12,
+      marginLeft: input.interpolate({
+        inputRange: [0, 1],
+        outputRange: [activeMargin, inactiveMargin],
+      }),
       color,
       backgroundColor: this.props.outline ? '#fff' : 'transparent',
       paddingHorizontal: 4,

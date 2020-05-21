@@ -404,8 +404,8 @@ export default class TextField extends PureComponent {
       });
 
     let border = {
-      borderTopLeftRadius: 5,
-      borderTopRightRadius: 5,
+      borderTopLeftRadius: 10,
+      borderTopRightRadius: 10,
       borderBottomLeftRadius: this.props.outline ? 5 : 0,
       borderBottomRightRadius: this.props.outline ? 5 : 0,
     };
@@ -416,7 +416,15 @@ export default class TextField extends PureComponent {
     let inputContainerStyle = {
       paddingTop: labelHeight,
       paddingBottom: inputContainerPadding,
-      backgroundColor: this.props.outline ? this.props.containerBackgroundColor || 'transparent' : this.props.containerBackgroundColor || '#ebebeb',
+      backgroundColor: (() => {
+        if (!focused && !value) {
+          return 'transparent';
+        }
+        if (this.props.outline) {
+          return this.props.containerBackgroundColor || 'transparent';
+        }
+        return this.props.containerBackgroundColor || '#ebebeb'
+      })(),
       ...border,
 
       ...(disabled?
@@ -528,6 +536,7 @@ export default class TextField extends PureComponent {
       errored,
       restricted,
       outline: this.props.outline,
+      prefix: this.props.renderPrefix,
       style: labelTextStyle,
     };
 
@@ -547,6 +556,7 @@ export default class TextField extends PureComponent {
           <Label {...labelProps}>{label}</Label>
 
           <View style={styles.row}>
+            {this.props.renderPrefix && this.props.renderPrefix(active)}
             {this.renderAffix('prefix', active, focused)}
 
             <TextInput
