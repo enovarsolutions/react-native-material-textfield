@@ -417,7 +417,7 @@ export default class TextField extends PureComponent {
       paddingTop: labelHeight,
       paddingBottom: inputContainerPadding,
       backgroundColor: (() => {
-        if (!focused && !value) {
+        if (!focused) {
           return 'transparent';
         }
         if (this.props.outline) {
@@ -428,8 +428,12 @@ export default class TextField extends PureComponent {
       ...border,
 
       ...(disabled?
-        { overflow: 'hidden' }:
+        { overflow: 'hidden', opacity: 0.5 }:
         { borderBottomColor, borderBottomWidth }),
+
+      ...(!editable?
+        { opacity: 0.5 }:
+        { }),
 
       ...(props.multiline?
         { height: 'web' === Platform.OS ? 'auto' : labelHeight + inputContainerPadding + height }:
