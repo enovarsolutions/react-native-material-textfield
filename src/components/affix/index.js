@@ -1,8 +1,26 @@
+//@flow
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import { Animated } from 'react-native';
 
 import styles from './styles';
+
+type propTypes = {
+  numberOfLines: number,
+
+  active: boolean,
+  focused: boolean,
+
+  type: 'prefix' | 'suffix',
+
+  fontSize: number,
+  baseColor: string,
+  animationDuration: number,
+
+  style: any,
+
+  children: React.ReactNode,
+};
 
 export default class Affix extends PureComponent {
   static defaultProps = {
@@ -10,26 +28,6 @@ export default class Affix extends PureComponent {
 
     active: false,
     focused: false,
-  };
-
-  static propTypes = {
-    numberOfLines: PropTypes.number,
-
-    active: PropTypes.bool,
-    focused: PropTypes.bool,
-
-    type: PropTypes.oneOf(['prefix', 'suffix']).isRequired,
-
-    fontSize: PropTypes.number.isRequired,
-    baseColor: PropTypes.string.isRequired,
-    animationDuration: PropTypes.number.isRequired,
-
-    style: Animated.Text.propTypes.style,
-
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node,
-    ]),
   };
 
   constructor(props) {
