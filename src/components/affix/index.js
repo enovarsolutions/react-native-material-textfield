@@ -22,7 +22,7 @@ type propTypes = {
   children: React.ReactNode,
 };
 
-export default class Affix extends PureComponent {
+export default class Affix extends PureComponent<propTypes> {
   static defaultProps = {
     numberOfLines: 1,
 

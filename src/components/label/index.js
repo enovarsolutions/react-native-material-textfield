@@ -25,7 +25,7 @@ type PropTypes = {
   children: React.ReactNode,
 };
 
-export default class Label extends PureComponent {
+export default class Label extends PureComponent<PropTypes> {
   static defaultProps = {
     numberOfLines: 1,
 

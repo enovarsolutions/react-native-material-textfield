@@ -4,17 +4,14 @@ import { View, Animated } from 'react-native';
 
 import styles from './styles';
 
-export default class Helper extends PureComponent {
+type propTypes = {
+  style: any,
+  children: React.ReactNode,
+};
+
+export default class Helper extends PureComponent<propTypes> {
   static defaultProps = {
     numberOfLines: 1,
-  };
-
-  static propTypes = {
-    style: Animated.Text.propTypes.style,
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node,
-    ]),
   };
 
   render() {
